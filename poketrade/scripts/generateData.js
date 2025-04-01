@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const fetch = require('node-fetch');
 require('dotenv').config();
 
@@ -44,18 +45,22 @@ fetch(API_URL, { headers })
       });
     });
 
+    // Write to src/data/products.js
+    const productsPath = path.join(__dirname, '../src/data/products.js');
     const productsOutput =
       `const products = ${JSON.stringify(products, null, 2)};\n\nexport default products;\n`;
-    fs.writeFileSync('./src/products.js', productsOutput);
+    fs.writeFileSync(productsPath, productsOutput);
 
+    // Write to src/data/categories.js
     const categoriesArray = Array.from(categorySet).map((cat, idx) => ({
       id: `c${idx + 1}`,
       description: cat[0].toUpperCase() + cat.slice(1)
     }));
+    const categoriesPath = path.join(__dirname, '../src/data/categories.js');
     const categoriesOutput =
       `const categories = ${JSON.stringify(categoriesArray, null, 2)};\n\nexport default categories;\n`;
-    fs.writeFileSync('./src/categories.js', categoriesOutput);
+    fs.writeFileSync(categoriesPath, categoriesOutput);
 
-    console.log('✅ products.js and categories.js created in src/');
+    console.log('products.js and categories.js updated in src/data/');
   })
-  .catch(err => console.error('❌ Error fetching card data:', err));
+  .catch(err => console.error('Error fetching card data:', err));
