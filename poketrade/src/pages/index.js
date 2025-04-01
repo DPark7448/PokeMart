@@ -1,4 +1,7 @@
 import Head from "next/head";
+import NavBar from "../components/NavBar.js";
+
+
 
 export default function Home() {
   return (
@@ -9,17 +12,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        backgroundColor: "black",
-        fontFamily: "Arial, sans-serif"
-      }}>
-      <h1 style={{ fontSize: "3rem", margin: 0 }}>Site will be ready soon!</h1>
+
+     
+      <NavBar />
+
+      <div
+        style={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          textAlign: "center",
+          backgroundColor: "black",
+          fontFamily: "Arial, sans-serif",
+        }}
+      >
+        <h1 style={{ fontSize: "3rem", margin: 0, color: "white" }}>
+          Site will be ready soon!
+        </h1>
       </div>
     </>
   );
