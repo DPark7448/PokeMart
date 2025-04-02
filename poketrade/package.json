@@ -10,8 +10,11 @@
     "type": "module"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.7",
+    "mongoose": "^8.13.1",
     "next": "15.2.4",
     "node-fetch": "^2.7.0",
     "react": "^19.0.0",
