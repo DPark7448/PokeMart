@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import mongoose from "mongoose";
 import User from "../../../../data/User";
 
+
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).end("Not supported");
