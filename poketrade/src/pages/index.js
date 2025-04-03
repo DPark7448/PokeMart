@@ -37,8 +37,8 @@ export default function Home() {
           backgroundImage: 'repeating-linear-gradient(45deg, #f8f9fa, #f8f9fa 20px, #e9ecef 20px, #e9ecef 40px)',
         }}
       >
-        <h1 className="display-4 fw-bold">Poke Mart</h1>
-        <p className="lead mb-4">Your #1 Hub For Pokemon Cards</p>
+        <h1 className="display-4 fw-bold text-black">Poke Mart</h1>
+        <p className="lead mb-4 text-black">Your #1 Hub For Pokemon Cards</p>
         <Link href="/products" className="btn btn-outline-dark">
         View The Entire Catalogue
         </Link>
