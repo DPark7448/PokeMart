@@ -11,11 +11,9 @@ export default async function handler(req, res)
         .connect(db)
         .then(() => {
             console.log('MongoDB connected');
-            return res.status(200).end()
         })
         .catch(err => {
             console.log(err)
-             return res.status(500).end(err)
         });
     
 }
