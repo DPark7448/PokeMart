@@ -7,7 +7,7 @@ export default function NavBar() {
       <div className="container-fluid d-flex align-items-center justify-content-between position-relative">
 
         <div className="d-flex align-items-center gap-4 fs-5">
-          <Link href="/" className="navbar-brand fw-bold fs-4 mb-0">Poke Mart</Link>
+          <Link href="/" className="navbar-brand fw-bold fs-4 mb-0 Text-dark">Poke Mart</Link>
           <Link href="/cards" className="nav-link px-2">Card List</Link>
           <Link href="/about" className="nav-link px-2">About</Link>
           <Link href="/contact" className="nav-link px-2">Contact</Link>
