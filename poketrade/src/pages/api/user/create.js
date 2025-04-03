@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { User } from "@/data/User";
 
 export default async function handler(req, res) {
-  if (req.method != "POST") {
+  if (req.method !== "POST") {
     return res.status(405).end("Not supported");
   }
   //const { router } = useRouter();

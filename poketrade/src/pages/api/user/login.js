@@ -3,7 +3,7 @@ import User from "@/data/User";
 import bcrypt from "bcryptjs";
 
 export default async function handler(req, res) {
-  if (req.method != "POST") {
+  if (req.method !== "POST") {
     return res.status(405).end("Not supported");
   }
   const { username, password } = req.body;
