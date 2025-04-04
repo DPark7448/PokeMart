@@ -28,7 +28,7 @@ export default function Home() {
           crossOrigin="anonymous" 
         />
       </Head>
-      {/*Hero section*/}
+      
       <div
         className="d-flex flex-column justify-content-center align-items-center text-center"
         style={{

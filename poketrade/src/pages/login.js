@@ -1,66 +1,37 @@
-// Import React and the useState hook for managing component state
-import React, { useState } from 'react';
-// Import the Profile component to be shown after login
-import Profile from '../components/Profile';
+// src/pages/login.js
+import { Card, Form, Button } from "react-bootstrap";
+import { useRouter } from "next/router"; //to redirect
+import { useState } from "react"; //to manage state
 
-// Define the Login component as a functional component
-function Login() {
-    // Declare a state variable for the username with an initial empty string
-    const [username, setUsername] = useState("");
-    // Declare a state variable to control whether the Profile component should be shown
-    const [showProfile, setShowProfile] = useState(false);
-    const [user, setUser] = useState("null");
-    const [error, setError] = useState("");
-    const [password, setPassword] = useState("");
+export default function Login(props) {
+  const router = useRouter(); //hook to access the router object 
+  const [userName, setUserName] = useState(""); //get the userName from props
+  const [password, setPassword] = useState(""); //get the password from props
+  
 
-    const handleLogin = async() => {
-      try{
-        const response = await fetch('http://localhost:3000/api/login', {
-          email: username,
-          password: password,
-      });
-    const loggedInUser = response.sata;
-    localStorage.setItem("user", JSON.stringify(loggedInUser));
-      setUser(loggedInUser);
-      setShowProfile(true);
-      setError("");
-    } catch (err) {
-      setError("Invalid credentials. Please try again.");
-    }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    router.push("/favorites"); //redirect to favorites page
   };
-    // Render the login form and handle user interactions
-    return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Login</h2>
 
-      {/* Input field for the email/username */}
-      <input
-      type="text"
-      placeholder="Email..."
-      value={username}
-      onChange={(e) => setUsername(e.target.value)}
-      />
-      <br /><br />
-
-      {/* Input field for the password */}
-      <input
-      type="password"
-      placeholder="Password..."
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      />
-      <br /><br />
-
-      {/* Button to trigger the login process */}
-      <button onClick={handleLogin}>Login</button>
-
-      {/* Display error message if login fails */}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {/* Show the Profile component if the user is successfully logged in */}
-      {showProfile && <Profile user={user} />}
-    </div>
-    );
+  return (
+    <>
+      <Card bg="light">
+        <Card.Body><h2>Login</h2>Enter your login information below:</Card.Body>
+      </Card>
+      <br />
+      <Form onSubmit={handleSubmit}>
+        <Form.Group>
+          <Form.Label>User:</Form.Label><Form.Control type="text" id="userName" name="userName" />
+        </Form.Group>
+        <br />
+        <Form.Group>
+          <Form.Label>Password:</Form.Label><Form.Control type="password" id="password" name="password" />
+        </Form.Group>
+        <br />
+        <Button variant="primary" className="pull-right" type="submit">Login</Button>
+      </Form>
+    </>
+  );
 }
-
-export default Login;
