@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     .connect(db)
     .then(async () => {
       console.log("MongoDB connected");
-      const newUser = new User({ username, password });
+      const newUser = new User({ username: username, password: password });
       await newUser
         .save()
         .then(() => {
@@ -33,6 +33,6 @@ export default async function handler(req, res) {
     .catch((err) => {
       console.log(err);
       mongoose.connection.close();
-      return res.status(500).end(err);
+      return res.status(500).end("An error has occurred");
     });
 }
