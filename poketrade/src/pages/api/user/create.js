@@ -9,12 +9,13 @@ export default async function handler(req, res) {
   //const { router } = useRouter();
   const { username, password } = req.body;
   const db = process.env.DB_URI;
-
+  if (!username) return res.end();
   await mongoose
     .connect(db)
     .then(async () => {
       console.log("MongoDB connected");
-      const newUser = new User({ username: username, password: password });
+      console.log("Name: " + username);
+      const newUser = new User({ username, password });
       await newUser
         .save()
         .then(() => {
@@ -23,9 +24,9 @@ export default async function handler(req, res) {
         })
         .catch((err) => {
           mongoose.connection.close();
-          if (err.code == 11000) {
-            return res.status(400).end("This user already exists");
-          }
+          //   if (err.code == 11000) {
+          //     return res.status(400).end("This user already exists");
+          //   }
           console.error(err);
           return res.status(500).end("An error has occurred");
         });

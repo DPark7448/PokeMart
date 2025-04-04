@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  favorites: [{ cardId: { type: String, unique: true } }],
+  favorites: [{ cardId: { type: String } }],
 });
 
 UserSchema.pre("save", function (next) {
