@@ -52,7 +52,7 @@ export default function Login(props) {
             type="text"
             id="userName"
             name="userName"
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => setUserName(e.target.value.trim())}
           />
         </Form.Group>
         <br />
@@ -62,7 +62,7 @@ export default function Login(props) {
             type="password"
             id="password"
             name="password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value.trim())}
           />
         </Form.Group>
         <br />
