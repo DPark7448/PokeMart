@@ -6,9 +6,14 @@ export default async function handler(req, res) {
   if (req.method !== "POST") {
     return res.status(405).end("Not supported");
   }
+  try {
+    req.body = JSON.parse(req.body);
+  } catch {}
+
   const { username, password } = req.body;
   const db = process.env.DB_URI;
 
+  //console.log(req.body);
   await mongoose
     .connect(db)
     .then(async () => {
