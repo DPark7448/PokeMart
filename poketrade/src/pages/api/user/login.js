@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import User from "../../../data/User";
 import bcrypt from "bcryptjs";
-
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -41,7 +41,11 @@ export default async function handler(req, res) {
                     "Could not find user with provided credenials; passwords don't match"
                   );
               }
-              return res.status(200).end("User " + username + " logged in");
+              const token = jwt.sign(
+                { _id: u._id, username: u.username },
+                process.env.NEXT_PUBLIC_SECRET
+              );
+              return res.status(200).json(token);
             })
             .catch((err) => {
               mongoose.connection.close();

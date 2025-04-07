@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import mongoose from "mongoose";
-import User from "../../../../data/User";
+import User from "../../../../../data/User";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     .connect(db)
     .then(async () => {
       console.log("MongoDB connected");
-      await User.findOne({ username: user }, { favorites: 1 })
+      await User.findOne({ username: user }, { searchHistory: 1 })
         .then((u) => {
           if (!u) {
             return res.status(404).end("User not found");
