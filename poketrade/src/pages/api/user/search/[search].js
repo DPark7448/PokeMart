@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-import User from "@/data/User";
+import User from "../../../../data/User";
 
 export default async function handler(req, res) {
-  if (!(req.method === "POST" || req.method === "DELETE")) {
+  if (!(req.method === "PUT" || req.method === "DELETE")) {
     return res.status(405).end("Not supported");
   }
   try {
     req.body = JSON.parse(req.body);
   } catch {}
   const { username } = req.body;
-  const { card } = req.query;
+  const { search } = req.query;
   const db = process.env.DB_URI;
 
   await mongoose
@@ -22,13 +22,13 @@ export default async function handler(req, res) {
             mongoose.connection.close();
             return res.status(404).end("User doesn't exist");
           }
-          const search = u.searchHistory.find((c) => c.search === search);
+          const searchObj = u.searchHistory.find((c) => c.search === search);
           switch (req.method) {
-            case "POST":
-              if (!cardObj) u.searchHistory.push({ search: search });
+            case "PUT":
+              if (!searchObj) u.searchHistory.push({ search: search });
               break;
             case "DELETE":
-              if (cardObj)
+              if (searchObj)
                 u.searchHistory.splice(
                   u.searchHistory.indexOf({ search: search }),
                   1
@@ -44,9 +44,9 @@ export default async function handler(req, res) {
               return res
                 .status(200)
                 .end(
-                  `${req.method === "POST" ? "Added" : "Deleted"} search ` +
+                  `${req.method === "PUT" ? "Added" : "Deleted"} search ` +
                     card +
-                    ` ${req.method === "POST" ? "to" : "from"} ` +
+                    ` ${req.method === "PUT" ? "to" : "from"} ` +
                     username +
                     `'s Search Histoyr`
                 );

@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
-import User from "@/data/User";
+import User from "../../../../data/User";
 
 export default async function handler(req, res) {
-  if (!(req.method === "POST" || req.method === "DELETE")) {
+  if (!(req.method === "PUT" || req.method === "DELETE")) {
     return res.status(405).end("Not supported");
   }
   try {
@@ -24,7 +24,7 @@ export default async function handler(req, res) {
           }
           const cardObj = u.favorites.find((c) => c.cardId === card);
           switch (req.method) {
-            case "POST":
+            case "PUT":
               if (!cardObj) u.favorites.push({ cardId: card });
               else
                 return res
@@ -49,9 +49,9 @@ export default async function handler(req, res) {
               return res
                 .status(200)
                 .end(
-                  `${req.method === "POST" ? "Added" : "Deleted"} card ` +
+                  `${req.method === "PUT" ? "Added" : "Deleted"} card ` +
                     card +
-                    ` ${req.method === "POST" ? "to" : "from"} ` +
+                    ` ${req.method === "PUT" ? "to" : "from"} ` +
                     username +
                     `'s favorites`
                 );

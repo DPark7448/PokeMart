@@ -16,10 +16,7 @@ export default async function handler(req, res) {
     .connect(db)
     .then(async () => {
       console.log("MongoDB connected");
-      await User.findOne(
-        { username: user },
-        { password: 0, favorites: 0, searchHistory: 0 }
-      )
+      await User.findOne({ username: user }, { favorites: 1 })
         .then((u) => {
           if (!u) {
             return res.status(404).end("User not found");
