@@ -5,6 +5,9 @@ export default async function handler(req, res) {
   if (!(req.method === "POST" || req.method === "DELETE")) {
     return res.status(405).end("Not supported");
   }
+  try {
+    req.body = JSON.parse(req.body);
+  } catch {}
   const { username } = req.body;
   const { card } = req.query;
   const db = process.env.DB_URI;
