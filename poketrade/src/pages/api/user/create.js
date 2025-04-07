@@ -27,9 +27,9 @@ export default async function handler(req, res) {
         })
         .catch((err) => {
           mongoose.connection.close();
-          //   if (err.code == 11000) {
-          //     return res.status(400).end("This user already exists");
-          //   }
+          if (err.code == 11000) {
+            return res.status(400).end("This user already exists");
+          }
           console.error(err);
           return res.status(500).end("An error has occurred");
         });
