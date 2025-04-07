@@ -41,37 +41,38 @@ export default function Login(props) {
 
   return (
     <>
-      <Card bg="light">
+      <Card bg="light" className="m-5 p-2">
         <Card.Body>
-          <h2>Login</h2>Enter your login information below:
+          <h2>Login</h2>
+          <p>Enter your login information below:</p>
+          <br />
+          <Form onSubmit={handleSubmit}>
+            <Form.Group>
+              <Form.Label>User:</Form.Label>
+              <Form.Control
+                type="text"
+                id="userName"
+                name="userName"
+                onChange={(e) => setUserName(e.target.value.trim())}
+              />
+            </Form.Group>
+            <br />
+            <Form.Group>
+              <Form.Label>Password:</Form.Label>
+              <Form.Control
+                type="password"
+                id="password"
+                name="password"
+                onChange={(e) => setPassword(e.target.value.trim())}
+              />
+            </Form.Group>
+            <br />
+            <Button variant="primary" className="pull-right" type="submit">
+              Login
+            </Button>
+          </Form>
         </Card.Body>
       </Card>
-      <br />
-      <Form onSubmit={handleSubmit}>
-        <Form.Group>
-          <Form.Label>User:</Form.Label>
-          <Form.Control
-            type="text"
-            id="userName"
-            name="userName"
-            onChange={(e) => setUserName(e.target.value.trim())}
-          />
-        </Form.Group>
-        <br />
-        <Form.Group>
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            type="password"
-            id="password"
-            name="password"
-            onChange={(e) => setPassword(e.target.value.trim())}
-          />
-        </Form.Group>
-        <br />
-        <Button variant="primary" className="pull-right" type="submit">
-          Login
-        </Button>
-      </Form>
     </>
   );
 }
