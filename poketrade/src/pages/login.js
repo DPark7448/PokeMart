@@ -2,12 +2,15 @@
 import { Card, Form, Button } from "react-bootstrap";
 import { useRouter } from "next/router"; //to redirect
 import { useState } from "react"; //to manage state
+import { useAtom } from "jotai";
+import { loggedInAtom } from "@/store/loginAtom";
 import jwt from "jsonwebtoken";
 
 export default function Login(props) {
   const router = useRouter(); //hook to access the router object
   const [userName, setUserName] = useState(""); //get the userName from props
   const [password, setPassword] = useState(""); //get the password from props
+  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
 
   const handleSubmit = (e) => {
     const options = {
@@ -26,9 +29,8 @@ export default function Login(props) {
             process.env.NEXT_PUBLIC_SECRET
           );
           console.log(token);
-          localStorage.setItem("token", JSON.stringify(token), {
-            expiresIn: 3600,
-          });
+          localStorage.setItem("token", JSON.stringify(token));
+          setLoggedIn(true);
           router.push("/favorites"); //redirect to favorites page
         } else console.log(res.text());
       })
