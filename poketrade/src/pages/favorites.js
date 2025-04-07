@@ -10,7 +10,7 @@ export default function FavoritesPage() {
     if (!loggedIn) {
       router.push("/login");
     }
-  }, [loggedIn]);
+  }, [loggedIn, router]);
   return (
     <>
       <div className="container mt-4">

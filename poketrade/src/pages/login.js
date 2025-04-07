@@ -55,8 +55,15 @@ async function updateAtoms() {
         setLoggedIn(true);
         await updateAtoms(); //call updateAtoms after successful login and update the favorites and search history atoms
         router.push("/favorites"); //redirect to favorites page
-      } else {
+        
+        // If the API returns 404 indicating the user was not found
+      } else if (res.status === 404){
+        setError("User not registered. Please register first.")
+        setLoading(false);
+      }else{
         console.log(await res.text());
+        setLoading(false);
+        setError("Invalid username or password. Please try again.");
       }
     } catch (err) {
       console.log(err);
