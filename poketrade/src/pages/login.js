@@ -4,12 +4,11 @@ import { useRouter } from "next/router"; //to redirect
 import { useState } from "react"; //to manage state
 import { useAtom } from "jotai";
 import { loggedInAtom } from "../store/loginAtom"; //import the atom to manage login state
-import jwt from "jsonwebtoken";
 import { Alert } from "react-bootstrap";
 import {favoritesAtom} from "../store/favoritesAtom"; //import the atom to manage favorites state
 import { searchHistoryAtom } from "../store/searchHistoryAtom"; //import the atom to manage search history state
 import { getFavorites, getHistory } from "../utils/userData"; //import the functions to get favorites and search history
-
+import { authenticateUser } from "../lib/authenticate"; //import function to authenticate user
 
 export default function Login(props) {
   const router = useRouter(); //hook to access the router object
@@ -44,17 +43,13 @@ async function updateAtoms() {
       return;
     }
     try {
-      const res = await fetch("/api/user/login", options);
-      if (res.status === 200) {
-        const token = jwt.sign(
-          { username: userName },
-          process.env.NEXT_PUBLIC_SECRET
-        );
-        console.log(token);
-        localStorage.setItem("token", JSON.stringify(token));
-        setLoggedIn(true);
-        await updateAtoms(); //call updateAtoms after successful login and update the favorites and search history atoms
-        router.push("/favorites"); //redirect to favorites page
+     // const res = await fetch("/api/user/login", options);
+     const result = await authenticateUser(userName, password);
+     if (result.success) {
+      localStorage.setItem("token", result.token);//store token in local storage      
+      setLoggedIn(true);
+      await updateAtoms(); //call updateAtoms after successful login and update the favorites and search history atoms
+      router.push("/favorites"); //redirect to favorites page
         
         // If the API returns 404 indicating the user was not found
       } else if (res.status === 404){

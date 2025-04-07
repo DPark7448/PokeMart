@@ -1,38 +1,35 @@
 // src/pages/register.js
-import { Card, Form, Button } from "react-bootstrap";
+import { Card, Form, Button, Alert } from "react-bootstrap"; // Import Alert
 import { useRouter } from "next/router"; //to redirect
 import { useState } from "react"; //to manage state
-import jwt from "jsonwebtoken";
+import { registerUser } from "../lib/authenticate";
 
-export default function Register(props) {
+export default function Register() {
   const router = useRouter(); //hook to access the router object
   const [userName, setUserName] = useState(""); //get the userName from props
   const [password, setPassword] = useState(""); //get the password from props
-  const [confirmPass, setConfirmPass] = useState(""); //get the password from props
+  const [confirmPass, setConfirmPass] = useState(""); //get the password2 from props
+  const [error, setError] = useState(null);
 
-  const handleSubmit = (e) => {
-    const options = {
-      method: "POST",
-      body: JSON.stringify({
-        username: userName,
-        password: password,
-      }),
-    };
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPass) {
-      alert("Passwords don't match");
+      setError("Passwords don't match");
       return;
     }
-    fetch("/api/user/create", options)
-      .then((res) => {
-        if (res.status === 200) {
-          alert("User successfully created");
-          router.push("/login"); //redirect to favorites page
-        } else console.log(res.text());
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  
+    try {
+      const result = await registerUser(userName, password, confirmPass);
+      if (result.success) {
+        setError(null);
+        alert("User successfully created");
+        router.push("/login");
+      } else {
+        setError(result.message || "Registration failed.");
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -40,8 +37,9 @@ export default function Register(props) {
       <Card bg="light" className="m-5 p-2">
         <Card.Body>
           <h2>Register</h2>
+          <p>Register for an account:</p>
           <br />
-          <br />
+          {error && <Alert variant="danger">{error}</Alert>} {/* Use Alert */}
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>User:</Form.Label>
