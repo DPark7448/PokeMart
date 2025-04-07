@@ -3,16 +3,30 @@ import { Card, Form, Button } from "react-bootstrap";
 import { useRouter } from "next/router"; //to redirect
 import { useState } from "react"; //to manage state
 import { useAtom } from "jotai";
-import { loggedInAtom } from "@/store/loginAtom";
+import { loggedInAtom } from "../store/loginAtom"; //import the atom to manage login state
 import jwt from "jsonwebtoken";
+import { Alert } from "react-bootstrap";
+import {favoritesAtom} from "../store/favoritesAtom"; //import the atom to manage favorites state
+import { searchHistoryAtom } from "../store/searchHistoryAtom"; //import the atom to manage search history state
+import { getFavorites, getHistory } from "../utils/userData"; //import the functions to get favorites and search history
+
 
 export default function Login(props) {
   const router = useRouter(); //hook to access the router object
   const [userName, setUserName] = useState(""); //get the userName from props
   const [password, setPassword] = useState(""); //get the password from props
-  const [loggedIn, setLoggedIn] = useAtom(loggedInAtom);
+  const [setLoggedIn] = useAtom(loggedInAtom);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [setFavoritesList] = useAtom(favoritesAtom);
+const [setSearchHistory] = useAtom(searchHistoryAtom);
 
-  const handleSubmit = (e) => {
+//create updateAtoms function to update the favorites and search history atoms (called after successful login)
+async function updateAtoms() {
+  setFavoritesList(await getFavorites());
+  setSearchHistory(await getHistory());
+}
+  const handleSubmit = async(e) => {
     const options = {
       method: "POST",
       body: JSON.stringify({
@@ -21,22 +35,32 @@ export default function Login(props) {
       }),
     };
     e.preventDefault();
-    fetch("/api/user/login", options)
-      .then((res) => {
-        if (res.status === 200) {
-          const token = jwt.sign(
-            { username: userName },
-            process.env.NEXT_PUBLIC_SECRET
-          );
-          console.log(token);
-          localStorage.setItem("token", JSON.stringify(token));
-          setLoggedIn(true);
-          router.push("/favorites"); //redirect to favorites page
-        } else console.log(res.text());
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    setError("");
+    setLoading(true);
+
+    if(!userName || !password){
+      setError("Please enter both username and password.");
+      setLoading(false);
+      return;
+    }
+    try {
+      const res = await fetch("/api/user/login", options);
+      if (res.status === 200) {
+        const token = jwt.sign(
+          { username: userName },
+          process.env.NEXT_PUBLIC_SECRET
+        );
+        console.log(token);
+        localStorage.setItem("token", JSON.stringify(token));
+        setLoggedIn(true);
+        await updateAtoms(); //call updateAtoms after successful login and update the favorites and search history atoms
+        router.push("/favorites"); //redirect to favorites page
+      } else {
+        console.log(await res.text());
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -46,6 +70,7 @@ export default function Login(props) {
           <h2>Login</h2>
           <p>Enter your login information below:</p>
           <br />
+          {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group>
               <Form.Label>User:</Form.Label>

@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
-import User from "@/data/User";
+import User from "../../../data/User";
 import bcrypt from "bcryptjs";
+
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
