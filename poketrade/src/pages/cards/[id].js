@@ -1,65 +1,78 @@
 import { useRouter } from 'next/router';
-import {useState, useEffect} from 'react';
+import products from '../../data/products';
+import Link from 'next/link';
+import typeColors from '../../utils/typeColors';
 
-export default function IDPage() {
-    const router = useRouter();
-    const { id } = router.query;
-    const [card, setCard] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+export default function CardDetails() {
+  const router = useRouter();
+  const { id } = router.query;
+  const card = products.find((c) => c.id === id);
 
-    useEffect(() => {
-      if(id){
-    //fetch details for the single card by its ID.
-    fetch(`/api/cards/${id}`)
-    .then((res) => {
-      if(!res.ok){
-        throw new Error("Unable to fetch card details.");
-      }
-      return res.json();
-    })
-    .then((data) => {
-      setCard(data);
-      setLoading(false);
-    })
-    .catch((err) => {
-      setError(err.message);
-      setLoading(false);
-    });
-  }
-}, [id]); //dependency array to re-run the effect when id changes
-if(loading){
-  return(
-      <div className="container mt-4">
-        
-        <p>Loading card details...</p>
-      </div>
-    );
-  }
-  if (error){
+  if (!card) {
     return (
-      <div className="container mt-4">
-        <p>{error}</p>
+      <div className="container mt-5">
+        <h2 className="text-danger">Card not found</h2>
+        <p>Try searching again or return to the <Link href="/">homepage</Link>.</p>
       </div>
     );
   }
 
   return (
-    <div className="container mt-4">
-      <h1>Card ID: {id}</h1>
-      {card ? (
-        <>
-        <h2>{card.name}</h2>
-        <p>{card.description}</p>
-        <p>Price: ${card.price}</p>
-        <p>Category: {card.category}</p>
-        <p>Rating: {card.rating}</p>
-        <p>Stock: {card.stock}</p>
-        <p>Image URL: {card.image}</p>
-        </>
-      ) : (
-        <p>No card found with ID: {id}</p>
-      )}
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-5">
+          <div className="card shadow">
+            <img
+              src={card.image || '/placeholder.png'}
+              alt={card.name}
+              className="card-img-top"
+            />
+          </div>
+        </div>
+        <div className="col-md-7">
+          <h2 className="fw-bold">{card.name}</h2>
+          <p className="text-muted">{card.description}</p>
+
+          <ul className="list-group mb-4">
+            <li className="list-group-item">
+              <strong>ID:</strong> {card.id}
+            </li>
+            <li className="list-group-item">
+              <strong>Price:</strong> ${(card.price / 100).toFixed(2)}
+            </li>
+            <li className="list-group-item">
+              <strong>Status:</strong>{' '}
+              {card.discontinued ? (
+                <span className="badge bg-danger">Discontinued</span>
+              ) : (
+                <span className="badge bg-success">Available</span>
+              )}
+            </li>
+            <li className="list-group-item">
+              <strong>Categories:</strong>{' '}
+              {card.categories && card.categories.length > 0 ? (
+                card.categories.map((cat, i) => {
+                  const color = typeColors[cat.toLowerCase()] || 'secondary';
+                  return (
+                    <span
+                      key={i}
+                      className={`badge bg-${color} me-2`}
+                    >
+                      {cat}
+                    </span>
+                  );
+                })
+              ) : (
+                <span className="text-muted">None</span>
+              )}
+            </li>
+          </ul>
+
+          <div className="mt-3">
+            <Link href="/" className="btn btn-outline-dark">Back to Home</Link>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
