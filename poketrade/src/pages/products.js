@@ -1,28 +1,26 @@
-// src/pages/products.js
-
-//Import useSWR from "swr" for data fetching and caching
 import useSWR from "swr";
+import { Container, Row, Col, Card } from "react-bootstrap";
 
-//Import required UI components from react-bootstrap for layout and styling
-import { Container, Row, Col, Card, Spinner } from "react-bootstrap";
-
-//Define a fetcher function that takwes a URL, fetches data from it, and returns the JSON response
+// Define a fetcher function that takes a URL, fetches data, and returns the JSON response
 const fetcher = (url) => fetch(url).then((res) => res.json());
 
-//export the main React function component for the products page
 export default function ProductsPage() {
-    //use SWR hook to pass props of data fetching and caching
-    //The first argument is the URL to fetch data from and the 2nd is the fetcher function
+  // Use SWR hook to fetch and cache the data from the API endpoint.
   const { data: products, error, isLoading } = useSWR("/api/products", fetcher);
-//if data is still loaind, return a loading message
+
+  // Display a loading message while data is being fetched
   if (isLoading) return <p className="text-center mt-5">Loading...</p>;
-  //if error, return error message
+  // Display an error message if fetching fails
   if (error) return <p className="text-danger mt-5">Failed to load products.</p>;
 
+  // Ensure products is an array before mapping over it
+  if (!Array.isArray(products)) {
+    return <p className="text-center mt-5">No products available.</p>;
+  }
+
   return (
-    //container component from react-bootstrap to wrap the content with proper spacing
     <Container className="mt-4">
-        {/* Page Header */}
+      {/* Page Header */}
       <h1 className="mb-4">Products</h1>
       <Row>
         {products.map((p) => (
@@ -32,7 +30,9 @@ export default function ProductsPage() {
               <Card.Body>
                 <Card.Title>{p.name}</Card.Title>
                 <Card.Text>{p.description}</Card.Text>
-                <Card.Text><strong>${(p.price / 100).toFixed(2)}</strong></Card.Text>
+                <Card.Text>
+                  <strong>${(p.price / 100).toFixed(2)}</strong>
+                </Card.Text>
                 {p.discontinued && (
                   <Card.Text className="text-danger">Discontinued</Card.Text>
                 )}

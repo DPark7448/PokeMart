@@ -10,7 +10,7 @@ import { searchHistoryAtom } from "../store/searchHistoryAtom"; //import the ato
 import { getFavorites, getHistory } from "../utils/userData"; //import the functions to get favorites and search history
 import { authenticateUser } from "../lib/authenticate"; //import function to authenticate user
 
-export default function Login(props) {
+export default function Login() {
   const router = useRouter(); //hook to access the router object
   const [userName, setUserName] = useState(""); //get the userName from props
   const [password, setPassword] = useState(""); //get the password from props

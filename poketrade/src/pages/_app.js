@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import NavBar from "../components/NavBar";
 import { useRouter } from "next/router"; //to redirect
 import { useAtom } from "jotai";
-import { loggedInAtom } from "@/store/loginAtom";
+import { loggedInAtom } from "../store/loginAtom";
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
     if (!localStorage.getItem("token")) {
       setLoggedIn(false);
     }
-  }, [router]);
+  }, [setLoggedIn, router]);
 
   return (
     <>

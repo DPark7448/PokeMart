@@ -52,7 +52,11 @@ export default function Home() {
             <div className="col-md-3 mb-4" key={card.id}>
               <div className="card h-100">
                 <img
-                  //placeholder img
+                   src={card.image?.startsWith('http') ? card.image : '/placeholder.png'}
+                   alt={card.name || 'Pokémon Card'}
+                   className="card-img-top"
+                   width="100%"
+                   height="auto"
                 />
                 <div className="card-body">
                   <h5 className="card-title">{card.name}</h5>

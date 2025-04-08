@@ -21,7 +21,11 @@ export default function SearchBar() {
         placeholder="Search for cards!"
         ref={searchInputRef}
       />
-      <button className="btn btn-outline-secondary ms-2 px-3" type="submit">
+      <button
+        className="btn btn-outline-secondary ms-2 px-3"
+        type="button"
+        onClick={() => (searchInputRef.current.value = '')}
+      >
         Clear
       </button>
     </form>

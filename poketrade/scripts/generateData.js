@@ -1,7 +1,9 @@
-const fs = require('fs');
-const path = require('path');
-const fetch = require('node-fetch');
-require('dotenv').config();
+import fs from'fs';
+import path from 'path';
+import fetch from 'node-fetch';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+dotenv.config();
 
 const API_URL = 'https://api.pokemontcg.io/v2/cards?pageSize=50';
 const API_KEY = process.env.NEXT_PUBLIC_POKEMON_API_KEY;
@@ -39,6 +41,7 @@ fetch(API_URL, { headers })
         id: cardId,
         name,
         description,
+        image: card.images?.small || "",
         price: getRandomPrice(),
         discontinued: getRandomDiscontinued(),
         categories
@@ -46,7 +49,14 @@ fetch(API_URL, { headers })
     });
 
     // Write to src/data/products.js
-    const productsPath = path.join(__dirname, '../src/data/products.js');
+    //const productsPath = path.join(__dirname, '../src/data/products.js');
+    
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const productsPath = path.join(__dirname, '../src/data/products.js');
+
     const productsOutput =
       `const products = ${JSON.stringify(products, null, 2)};\n\nexport default products;\n`;
     fs.writeFileSync(productsPath, productsOutput);

@@ -1,43 +1,43 @@
 const categories = [
   {
     "id": "c1",
-    "description": "Metal"
-  },
-  {
-    "id": "c2",
-    "description": "Grass"
-  },
-  {
-    "id": "c3",
     "description": "Lightning"
   },
   {
-    "id": "c4",
-    "description": "Dragon"
-  },
-  {
-    "id": "c5",
-    "description": "Darkness"
-  },
-  {
-    "id": "c6",
+    "id": "c2",
     "description": "Colorless"
   },
   {
-    "id": "c7",
-    "description": "Psychic"
+    "id": "c3",
+    "description": "Grass"
   },
   {
-    "id": "c8",
-    "description": "Fire"
-  },
-  {
-    "id": "c9",
+    "id": "c4",
     "description": "Water"
   },
   {
-    "id": "c10",
+    "id": "c5",
+    "description": "Psychic"
+  },
+  {
+    "id": "c6",
+    "description": "Darkness"
+  },
+  {
+    "id": "c7",
+    "description": "Fire"
+  },
+  {
+    "id": "c8",
+    "description": "Metal"
+  },
+  {
+    "id": "c9",
     "description": "Fighting"
+  },
+  {
+    "id": "c10",
+    "description": "Dragon"
   }
 ];
 
