@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useRouter } from "next/router";
-import { Form, Button, Alert, Card } from "react-bootstrap";
-import { registerUser } from "../utils/api"; // Update this path as needed
+ // src/pages/register.js
+ import { Card, Form, Button, Alert } from "react-bootstrap"; // Import Alert
+ import { useRouter } from "next/router"; //to redirect
+ import { useState } from "react"; //to manage state
+ import { registerUser } from "../lib/authenticate";
 
 export default function Register() {
   const router = useRouter();
