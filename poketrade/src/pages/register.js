@@ -1,13 +1,14 @@
-import { Card, Form, Button, Alert } from "react-bootstrap";
-import { useRouter } from "next/router";
-import { useState } from "react";
+// src/pages/register.js
+import { Card, Form, Button, Alert } from "react-bootstrap"; // Import Alert
+import { useRouter } from "next/router"; //to redirect
+import { useState } from "react"; //to manage state
 import { registerUser } from "../lib/authenticate";
 
 export default function Register() {
-  const router = useRouter();
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const router = useRouter(); //hook to access the router object
+  const [userName, setUserName] = useState(""); //get the userName from props
+  const [password, setPassword] = useState(""); //get the password from props
+  const [confirmPass, setConfirmPass] = useState(""); //get the password2 from props
   const [error, setError] = useState(null);
 
   const handleSubmit = async (e) => {
