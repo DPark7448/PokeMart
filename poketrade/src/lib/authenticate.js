@@ -1,6 +1,5 @@
 // src/lib/authenticate.js
 
-// src/lib/authenticate.js
 
 export async function authenticateUser(username, password) {
     try {
@@ -22,4 +21,22 @@ export async function authenticateUser(username, password) {
       return { success: false, message: "Login failed. Please try again." };
     }
   }
+  export async function registerUser(userName, password, password2) {
+    try {
+      const res = await fetch("/api/user/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName, password, password2 }),
+      });
   
+      if (res.status === 200) {
+        return { success: true };
+      } else {
+        const errorData = await res.json();
+        return { success: false, message: errorData.message || "Registration failed." };
+      }
+    } catch (err) {
+      console.error("registerUser error:", err);
+      return { success: false, message: "Registration failed. Please try again." };
+    }
+  }

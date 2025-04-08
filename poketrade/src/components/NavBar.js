@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
-import { loggedInAtom } from "@/store/loginAtom";
+import { loggedInAtom } from "../store/loginAtom";
 
 export default function NavBar() {
   const [loggedIn] = useAtom(loggedInAtom);

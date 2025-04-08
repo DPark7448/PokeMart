@@ -1,7 +1,7 @@
 //src/pages/favorites.js
 import { useRouter } from "next/router"; //to redirect
 import { useAtom } from "jotai";
-import { loggedInAtom } from "@/store/loginAtom";
+import { loggedInAtom } from "../store/loginAtom";
 import { useEffect } from "react";
 export default function FavoritesPage() {
   const router = useRouter();
