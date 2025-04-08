@@ -547,11 +547,10 @@ const products = [
     "image": "https://images.pokemontcg.io/bw4/1.png",
     "price": 1345,
     "discontinued": false,
-    "categories": [
+    "categories": 
       "grass"
-    ]
+    
   }
 ];
 
-// Ensure compatibility with ES module systems
 export default products;

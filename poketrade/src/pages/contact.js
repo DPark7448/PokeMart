@@ -38,7 +38,7 @@ export default function Contact() {
       <Card style={{ maxWidth: "500px", width: "100%" }} className="shadow p-4">
         <Card.Body>
           <h3 className="text-center mb-3">Contact Us</h3>
-          <p className="text-muted text-center mb-4">We'd love to hear from you.</p>
+          <p className="text-muted text-center mb-4">We&apos;d love to hear from you.</p>
 
           {error && <Alert variant="danger">{error}</Alert>}
           {submitted && <Alert variant="success">Message sent successfully!</Alert>}
