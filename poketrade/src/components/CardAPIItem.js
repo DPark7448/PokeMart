@@ -8,12 +8,12 @@ export default function CardAPIItem(props) {
   const hasButton = props.hasButton;
   return (
     <>
-      <Col key={p.id} md={4} className="mb-4">
+      <Col key={p.id} md={3} className="mb-4">
         <Card className="h-100">
           <Card.Img variant="top" src={p.images?.small} alt={p.name} />
           <Card.Body>
             <Card.Title>{p.name}</Card.Title>
-            <Card.Text>{p.flavorText}</Card.Text>
+            <Card.Text style={{ fontSize: "12px" }}>{p.flavorText}</Card.Text>
             <Card.Text>
               <strong>
                 ${(p.cardmarket.prices.averageSellPrice / 100).toFixed(2)}
