@@ -37,9 +37,10 @@ export default function CardDetails() {
                     headers: { authorization: token },
                   })
                     .then(async (res) => {
-                      if (res.status === 200)
+                      if (res.status === 200) {
                         alert("Card successfully added to favorites");
-                      else
+                        router.reload();
+                      } else
                         alert("An error has occurred: " + (await res.text()));
                     })
                     .catch((err) => console.log(err));
@@ -58,9 +59,10 @@ export default function CardDetails() {
                     headers: { authorization: token },
                   })
                     .then(async (res) => {
-                      if (res.status === 200)
+                      if (res.status === 200) {
                         alert("Card successfully removed from favorites");
-                      else
+                        router.reload();
+                      } else
                         alert("An error has occurred: " + (await res.text()));
                     })
                     .catch((err) => console.log(err));
