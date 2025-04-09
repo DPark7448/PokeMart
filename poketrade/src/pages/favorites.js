@@ -5,6 +5,8 @@ import { loggedInAtom } from "../store/loginAtom";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { set } from "mongoose";
+import CardAPIItem from "components/CardAPIItem";
+import CardList from "components/CardList";
 
 export default function FavoritesPage() {
   const router = useRouter();
@@ -38,46 +40,11 @@ export default function FavoritesPage() {
         }
       })
       .catch((err) => console.log("Favorites error" + err));
+
+    // loads page after 3 seconds to account for loading data via the api
     setTimeout(() => {
       console.log(favList);
-      setEleList(
-        <>
-          {favList.map((card) => (
-            <>
-              <div className="col-md-3 mb-4" key={card.data.id}>
-                <div className="card h-100">
-                  <img
-                    src={
-                      card.data.images?.small?.startsWith("http")
-                        ? card.data.images.small
-                        : "/placeholder.png"
-                    }
-                    alt={card.data.name || "Pokémon Card"}
-                    className="card-img-top"
-                    width="100%"
-                    height="auto"
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{card.data.name}</h5>
-                    <p className="text-muted">
-                      $
-                      {(
-                        card.data.cardmarket.prices.averageSellPrice / 100
-                      ).toFixed(2)}
-                    </p>
-                    <Link
-                      href={`/cards/${card.data.id}`}
-                      className="btn btn-primary"
-                    >
-                      View Card
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </>
-          ))}
-        </>
-      );
+      setEleList(<>{<CardList cards={favList} useLocal={false} />}</>);
     }, 3000);
   }, []);
   return (
