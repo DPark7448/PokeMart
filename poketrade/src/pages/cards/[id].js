@@ -15,6 +15,7 @@ export default function CardDetails() {
   const card = products.find((c) => c.id === id);
 
   useEffect(() => {
+    if (!id) return;
     const token = localStorage.getItem("token");
     if (token) {
       fetch("/api/user/get/favorites", {
@@ -25,13 +26,13 @@ export default function CardDetails() {
           return res.json();
         })
         .then((val) => {
-          const fav = val.favorites.find((c) => c.cardId === id);
+          const fav = val.favorites.find((c) => c.cardId === card.id);
           if (!fav) {
             setFavEle(
               <Button
                 className="btn btn-success mx-2"
                 onClick={() => {
-                  fetch("/api/favorite/" + id, {
+                  fetch("/api/user/favorite/" + card.id, {
                     method: "PUT",
                     headers: { authorization: token },
                   })
@@ -52,7 +53,7 @@ export default function CardDetails() {
               <Button
                 className="btn btn-danger mx-2"
                 onClick={() => {
-                  fetch("/api/favorite/" + id, {
+                  fetch("/api/user/favorite/" + card.id, {
                     method: "DELETE",
                     headers: { authorization: token },
                   })
@@ -72,7 +73,7 @@ export default function CardDetails() {
         })
         .catch((err) => console.log(err));
     }
-  }, []);
+  }, [router.isReady]);
 
   if (!card) {
     return (
