@@ -7,19 +7,21 @@ export default function CardItem(props) {
   console.log(p);
   return (
     <>
-      <Card className="h-100">
-        <Card.Img variant="top" src={p.image} alt={p.name} />
-        <Card.Body>
-          <Card.Title>{p.name}</Card.Title>
-          <Card.Text>{p.description}</Card.Text>
-          <Card.Text>
-            <strong>${(p.price / 100).toFixed(2)}</strong>
-          </Card.Text>
-          {p.discontinued && (
-            <Card.Text className="text-danger">Discontinued</Card.Text>
-          )}
-        </Card.Body>
-      </Card>
+      <Col key={p.id} md={4} className="mb-4">
+        <Card className="h-100">
+          <Card.Img variant="top" src={p.image} alt={p.name} />
+          <Card.Body>
+            <Card.Title>{p.name}</Card.Title>
+            <Card.Text>{p.description}</Card.Text>
+            <Card.Text>
+              <strong>${(p.price / 100).toFixed(2)}</strong>
+            </Card.Text>
+            {p.discontinued && (
+              <Card.Text className="text-danger">Discontinued</Card.Text>
+            )}
+          </Card.Body>
+        </Card>
+      </Col>
     </>
   );
 }
