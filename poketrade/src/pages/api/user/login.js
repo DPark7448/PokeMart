@@ -45,7 +45,7 @@ export default async function handler(req, res) {
                 { _id: u._id, username: u.username },
                 process.env.NEXT_PUBLIC_SECRET
               );
-              return res.status(200).json(token);
+              return res.status(200).json({ token: token });
             })
             .catch((err) => {
               mongoose.connection.close();
