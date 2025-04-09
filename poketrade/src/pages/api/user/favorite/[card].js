@@ -10,12 +10,10 @@ export default async function handler(req, res) {
   if (!token) {
     return res.status(401).end("Unauthorized");
   }
-  const { username } = jwt.verify(
-    token,
-    process.env.NEXT_PUBLIC_SECRET
-  ).username;
+  const { username } = jwt.verify(token, process.env.NEXT_PUBLIC_SECRET);
   const { card } = req.query;
   const db = process.env.DB_URI;
+  console.log(username);
   await mongoose.connect(db);
   mongoose
     .connect(db)
