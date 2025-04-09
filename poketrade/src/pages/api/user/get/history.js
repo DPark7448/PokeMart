@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import mongoose from "mongoose";
 import User from "../../../../data/User";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -10,10 +11,8 @@ export default async function handler(req, res) {
   if (!token) {
     return res.status(401).end("Unauthorized");
   }
-  const { user } = jwt.verify(token, process.env.NEXT_PUBLIC_SECRET).username;
-  if (username !== user) {
-    return res.status(401).end("Unauthorized");
-  }
+  const user = jwt.verify(token, process.env.NEXT_PUBLIC_SECRET).username;
+
   const db = process.env.DB_URI;
 
   await mongoose
