@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
 import User from "../../../../data/User";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (!(req.method === "PUT" || req.method === "DELETE")) {
     return res.status(405).end("Not supported");
   }
-  try {
-    req.body = JSON.parse(req.body);
-  } catch {}
-  const { username } = req.body;
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).end("Unauthorized");
+  }
+  const { username } = jwt.verify(
+    token,
+    process.env.NEXT_PUBLIC_SECRET
+  ).username;
   const { card } = req.query;
   const db = process.env.DB_URI;
 

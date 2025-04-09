@@ -6,10 +6,20 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).end("Not supported");
   }
-  try {
-    req.body = JSON.parse(req.body);
-  } catch {}
+  const token = req.headers.authorization;
+  if (!token) {
+    return res.status(401).end("Unauthorized");
+  }
+  const { username } = jwt.verify(
+    token,
+    process.env.NEXT_PUBLIC_SECRET
+  ).username;
   const { user } = req.query;
+
+  if (username !== user) {
+    return res.status(401).end("Unauthorized");
+  }
+
   const db = process.env.DB_URI;
 
   await mongoose
