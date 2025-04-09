@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import products from "../../data/products";
 import Link from "next/link";
-import typeColors from "../../utils/typeColors";
+import typeColors from "../../utils/typeColors"; 
 
 export default function CardDetails() {
   const router = useRouter();

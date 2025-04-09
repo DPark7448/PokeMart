@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import products from '../data/products';
+import { useAtom } from 'jotai';
+import { favoritesAtom } from 'store/favoritesAtom';
 import { useEffect, useState } from 'react';
 
   
@@ -8,6 +10,14 @@ import { useEffect, useState } from 'react';
 export default function Home() {
 
   const [featured, setFeatured] = useState([]);
+  const [favorites, setFavorites] = useAtom(favoritesAtom);
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    );
+  };
+  
+  const isFavorite = (id) => favorites.includes(id);
 
   useEffect(() => {
     const shuffled = [...products].sort(() => Math.random() - 0.5).slice(0, 4);
@@ -58,7 +68,7 @@ export default function Home() {
                    width="100%"
                    height="auto"
                 />
-                <div className="card-body">
+                <div className="card-body pb-3">
                   <h5 className="card-title">{card.name}</h5>
                   <p className="card-text" style={{ fontSize: '0.9rem' }}>
                     {card.description.length > 100
@@ -71,6 +81,13 @@ export default function Home() {
                   <Link href={`/cards/${card.id}`} className="btn btn-primary">
                     View Card
                   </Link>
+                  <br /> <br />
+                  <button
+                  className={`btn btn-sm ${isFavorite(card.id) ? 'btn-danger' : 'btn-outline-danger'} ms-2 pb-2`}
+                  onClick={() => toggleFavorite(card.id)}
+                  >
+                    {isFavorite(card.id) ? '♥' : '♡'}
+                  </button>
                 </div>
               </div>
             </div>
