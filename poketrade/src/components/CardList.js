@@ -1,10 +1,11 @@
-import CardItem from './CardItem';
+import CardItem from "./CardItem";
+import CardAPIItem from "./CardAPIItem";
 
-export default function CardList({ cards = [] }) {
+export default function CardList({ cards = [], useLocal = true }) {
   if (!Array.isArray(cards)) return null;
 
-  if (typeof window === 'undefined' && cards.length === 0) {
-    return null; 
+  if (typeof window === "undefined" && cards.length === 0) {
+    return null;
   }
 
   if (cards.length === 0) {
@@ -13,9 +14,14 @@ export default function CardList({ cards = [] }) {
 
   return (
     <div className="row justify-content-center">
-      {cards.filter(Boolean).map((card) => (
-        <CardItem key={card.id} card={card} />
-      ))}
+      {useLocal &&
+        cards
+          .filter(Boolean)
+          .map((card) => <CardItem key={card.id} card={card} />)}
+      {!useLocal &&
+        cards
+          .filter(Boolean)
+          .map((card) => <CardAPIItem key={card.data.id} card={card} />)}
     </div>
   );
 }
