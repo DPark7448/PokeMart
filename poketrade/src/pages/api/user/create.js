@@ -13,9 +13,10 @@ export default async function handler(req, res) {
   const { username, password } = req.body;
   const db = process.env.DB_URI;
   if (!username) return res.end();
-  await mongoose
+  await mongoose.connect(db);
+  mongoose
     .connect(db)
-    .then(async () => {
+    .then(async (res) => {
       console.log("MongoDB connected");
       console.log("Name: " + username);
       const newUser = new User({ username, password });

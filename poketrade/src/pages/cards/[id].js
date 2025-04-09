@@ -1,12 +1,78 @@
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { Button } from "react-bootstrap";
+import { useAtom } from "jotai";
 import products from "../../data/products";
 import Link from "next/link";
-import typeColors from "../../utils/typeColors"; 
+import { loggedInAtom } from "../../store/loginAtom";
+import typeColors from "../../utils/typeColors";
 
 export default function CardDetails() {
   const router = useRouter();
   const { id } = router.query;
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [favEle, setFavEle] = useState(<></>);
   const card = products.find((c) => c.id === id);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("/api/user/get/favorites", {
+        method: "GET",
+        headers: { authorization: token },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((val) => {
+          const fav = val.favorites.find((c) => c.cardId === id);
+          if (!fav) {
+            setFavEle(
+              <Button
+                className="btn btn-success mx-2"
+                onClick={() => {
+                  fetch("/api/favorite/" + id, {
+                    method: "PUT",
+                    headers: { authorization: token },
+                  })
+                    .then(async (res) => {
+                      if (res.status === 200)
+                        alert("Card successfully added to favorites");
+                      else
+                        alert("An error has occurred: " + (await res.text()));
+                    })
+                    .catch((err) => console.log(err));
+                }}
+              >
+                Add To Favorites
+              </Button>
+            );
+          } else {
+            setFavEle(
+              <Button
+                className="btn btn-danger mx-2"
+                onClick={() => {
+                  fetch("/api/favorite/" + id, {
+                    method: "DELETE",
+                    headers: { authorization: token },
+                  })
+                    .then(async (res) => {
+                      if (res.status === 200)
+                        alert("Card successfully removed from favorites");
+                      else
+                        alert("An error has occurred: " + (await res.text()));
+                    })
+                    .catch((err) => console.log(err));
+                }}
+              >
+                Remove From Favorites
+              </Button>
+            );
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }, []);
 
   if (!card) {
     return (
@@ -68,6 +134,7 @@ export default function CardDetails() {
           </ul>
 
           <div className="mt-3">
+            {favEle}
             <Link href="/" className="btn btn-outline-dark">
               Back to Home
             </Link>

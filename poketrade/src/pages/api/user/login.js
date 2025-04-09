@@ -15,7 +15,8 @@ export default async function handler(req, res) {
   const db = process.env.DB_URI;
 
   //console.log(req.body);
-  await mongoose
+  await mongoose.connect(db);
+  mongoose
     .connect(db)
     .then(async () => {
       console.log("MongoDB connected");
