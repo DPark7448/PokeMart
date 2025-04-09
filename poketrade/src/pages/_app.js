@@ -15,8 +15,8 @@ function MyApp({ Component, pageProps }) {
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       setLoggedIn(false);
-    }
-  }, [setLoggedIn, router]);
+    } else setLoggedIn(true);
+  }, [router]);
 
   return (
     <>
