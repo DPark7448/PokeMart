@@ -35,7 +35,7 @@ export default function FavoritesPage() {
             })
             .then((val) => {
               console.log(val);
-              favList.push(val);
+              if (!favList.find((v) => v.id === val.id)) favList.push(val);
             })
             .catch((err) => console.log("Card error: " + err));
         }
@@ -47,7 +47,7 @@ export default function FavoritesPage() {
       console.log(favList);
       setEleList(<>{<CardList cards={favList} useLocal={true} />}</>);
     }, 3000);
-  }, []);
+  }, [router.isReady]);
   return (
     <>
       <div className="container mt-4">
