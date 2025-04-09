@@ -29,11 +29,12 @@ export default function FavoritesPage() {
       })
       .then((val) => {
         for (let i = 0; i < val.favorites.length && i < 50; i++) {
-          fetch(`https://api.pokemontcg.io/v2/cards/${val.favorites[i].cardId}`)
+          fetch(`/api/products/${val.favorites[i].cardId}`)
             .then((res) => {
               return res.json();
             })
             .then((val) => {
+              console.log(val);
               favList.push(val);
             })
             .catch((err) => console.log("Card error: " + err));
@@ -44,7 +45,7 @@ export default function FavoritesPage() {
     // loads page after 3 seconds to account for loading data via the api
     setTimeout(() => {
       console.log(favList);
-      setEleList(<>{<CardList cards={favList} useLocal={false} />}</>);
+      setEleList(<>{<CardList cards={favList} useLocal={true} />}</>);
     }, 3000);
   }, []);
   return (
