@@ -4,7 +4,6 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 
 export default function CardItem(props) {
   const p = props.card;
-  console.log(p);
   return (
     <>
       <Col key={p.id} md={4} className="mb-4">
