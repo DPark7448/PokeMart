@@ -1,7 +1,16 @@
 import CardItem from "./CardItem";
 import CardAPIItem from "./CardAPIItem";
+import { useAtom } from "jotai";
+import { loggedInAtom } from "store/loginAtom";
+import { useState } from "react";
 
-export default function CardList({ cards = [], useLocal = true }) {
+export default function CardList({
+  cards = [],
+  useLocal = true,
+  hasButton = false,
+}) {
+  const [loggedIn] = useAtom(loggedInAtom);
+  const [favList, setFavList] = useState([]);
   if (!Array.isArray(cards)) return null;
 
   if (typeof window === "undefined" && cards.length === 0) {
@@ -17,7 +26,9 @@ export default function CardList({ cards = [], useLocal = true }) {
       {useLocal &&
         cards
           .filter(Boolean)
-          .map((card) => <CardItem key={card.id} card={card} />)}
+          .map((card) => (
+            <CardItem key={card.id} card={card} hasButton={hasButton} />
+          ))}
       {!useLocal &&
         cards
           .filter(Boolean)
