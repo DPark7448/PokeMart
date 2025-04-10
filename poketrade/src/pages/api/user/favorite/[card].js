@@ -22,7 +22,7 @@ export default async function handler(req, res) {
       User.findOne({ username: username })
         .then((u) => {
           if (!u) {
-            mongoose.connection.close();
+            //mongoose.connection.close();
             return res.status(404).end("User doesn't exist");
           }
           const cardObj = u.favorites.find((c) => c.cardId === card);
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
             { $set: { favorites: u.favorites } }
           )
             .then(() => {
-              mongoose.connection.close();
+              //mongoose.connection.close();
               return res
                 .status(200)
                 .end(
@@ -60,20 +60,20 @@ export default async function handler(req, res) {
                 );
             })
             .catch((err) => {
-              mongoose.connection.close();
+              //mongoose.connection.close();
               console.error(err);
               return res.status(500).end("An error has occurred");
             });
         })
         .catch((err) => {
-          mongoose.connection.close();
+          //mongoose.connection.close();
           console.error(err);
           return res.status(500).end("An error has occurred");
         });
     })
     .catch((err) => {
       console.log(err);
-      mongoose.connection.close();
+      // mongoose.connection.close();
       return res.status(500).end("An error has occurred");
     });
 }

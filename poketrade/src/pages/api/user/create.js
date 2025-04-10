@@ -23,11 +23,11 @@ export default async function handler(req, res) {
       await newUser
         .save()
         .then(() => {
-          mongoose.connection.close();
+          //mongoose.connection.close();
           return res.status(200).end("Created user: " + username);
         })
         .catch((err) => {
-          mongoose.connection.close();
+          //mongoose.connection.close();
           if (err.code == 11000) {
             return res.status(400).end("This user already exists");
           }
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      mongoose.connection.close();
+      //mongoose.connection.close();
       return res.status(500).end("An error has occurred");
     });
 }

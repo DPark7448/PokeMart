@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         })
         .catch((err) => {
           console.error(err);
-          mongoose.connection.close();
+          //mongoose.connection.close();
           return res.status(500).end("An error occurred");
         });
     })

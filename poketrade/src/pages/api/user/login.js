@@ -23,7 +23,7 @@ export default async function handler(req, res) {
       await User.findOne({ username: username })
         .then(async (u) => {
           if (!u) {
-            mongoose.connection.close();
+            //mongoose.connection.close();
             return res
               .status(404)
               .end(
@@ -34,7 +34,7 @@ export default async function handler(req, res) {
           await bcrypt
             .compare(password, u.password)
             .then((match) => {
-              mongoose.connection.close();
+              //mongoose.connection.close();
               if (!match) {
                 return res
                   .status(404)
@@ -49,19 +49,19 @@ export default async function handler(req, res) {
               return res.status(200).json({ token: token });
             })
             .catch((err) => {
-              mongoose.connection.close();
+              //mongoose.connection.close();
               console.error(err);
               return res.status(500).end("An error occurred");
             });
         })
         .catch((err) => {
-          mongoose.connection.close();
+          //mongoose.connection.close();
           console.error(err);
           return res.status(500).end("An error occurred");
         });
     })
     .catch((err) => {
-      mongoose.connection.close();
+      //mongoose.connection.close();
       console.log(err);
     });
 }
