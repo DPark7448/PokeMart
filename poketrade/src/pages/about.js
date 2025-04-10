@@ -6,27 +6,27 @@ export default function AboutPage() {
     <>
       <Card
         className={"mx-auto "}
-        style={{ maxWidth: "540px", marginTop: "15%" }}
+        style={{ maxWidth: "740px", marginTop: "5%" }}
       >
-        <Row className={"g-0"}>
-          <Col className={"md-4"}>
-            <Card.Img
-              src="..."
-              className={"img-fluid rounded-start"}
-              alt="..."
-            />
-          </Col>
-          <Col className={"md-8"}>
-            <Card.Body>
-              <Card.Title>About Us</Card.Title>
-              <Card.Text>
-                This is a wider card with supporting text below as a natural
-                lead-in to additional content. This content is a little bit
-                longer.
-              </Card.Text>
-            </Card.Body>
-          </Col>
-        </Row>
+        <Col className={"md-4"}>
+          <Card.Img
+            src="pikachu_tcg.jpeg"
+            className={"rounded-start"}
+            alt="..."
+          />
+        </Col>
+        <Col className={"md-8"}>
+          <Card.Body>
+            <Card.Title>About Us</Card.Title>
+            <Card.Subtitle>Cards cards and more cards!</Card.Subtitle>
+            <br />
+            <Card.Text>
+              We at PokeMart provide only the best cards in the world. The site
+              is still in construction so we apologize for any Misdreavus bugs
+              you experience on the site!
+            </Card.Text>
+          </Card.Body>
+        </Col>
       </Card>
     </>
   );
