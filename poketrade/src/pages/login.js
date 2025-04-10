@@ -66,40 +66,46 @@ export default function Login() {
   };
 
   return (
-    <>
-      <Card bg="light" className="m-5 p-2">
+    <div className="d-flex justify-content-center align-items-center min-vh-100">
+      {/*made login page same as register page */}
+      <Card style={{ maxWidth: "400px", width: "100%" }} className="shadow p-4">
         <Card.Body>
-          <h2>Login</h2>
-          <p>Enter your login information below:</p>
-          <br />
+          <h3 className="mb-3 text-center">Login</h3>
+          <p className="text-muted text-center mb-4">Enter your login information below</p>
+          
           {error && <Alert variant="danger">{error}</Alert>}
+
           <Form onSubmit={handleSubmit}>
-            <Form.Group>
-              <Form.Label>User:</Form.Label>
+            <Form.Group className="mb-3">
+              <Form.Label>Username</Form.Label>
               <Form.Control
                 type="text"
                 id="userName"
                 name="userName"
+                placeholder="Enter your username"
                 onChange={(e) => setUserName(e.target.value.trim())}
+                disabled={loading}
               />
             </Form.Group>
-            <br />
-            <Form.Group>
-              <Form.Label>Password:</Form.Label>
+
+            <Form.Group className="mb-4">
+              <Form.Label>Password</Form.Label>
               <Form.Control
                 type="password"
                 id="password"
                 name="password"
+                placeholder="Enter your password"
                 onChange={(e) => setPassword(e.target.value.trim())}
+                disabled={loading}
               />
             </Form.Group>
-            <br />
-            <Button variant="primary" className="pull-right" type="submit">
-              Login
+
+            <Button variant="primary" className="w-100" type="submit" disabled={loading}>
+              {loading ? "Please wait..." : "Login"}
             </Button>
           </Form>
         </Card.Body>
       </Card>
-    </>
+    </div>
   );
 }
