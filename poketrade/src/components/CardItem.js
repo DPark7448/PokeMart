@@ -40,29 +40,45 @@ export default function CardItem(props) {
         break;
     }
   };
-  return (
-    <>
-      <Col key={p.id} md={3} className="mb-4">
-        <Card className="h-100">
-          <Card.Img variant="top" src={p.image} alt={p.name} />
-          <Card.Body>
-            <Card.Title>{p.name}</Card.Title>
-            <Card.Text style={{ fontSize: "12px" }}>{p.description}</Card.Text>
-            <Card.Text>
-              <strong>${(p.price / 100).toFixed(2)}</strong>
-            </Card.Text>
-            {p.discontinued && (
-              <Card.Text className="text-danger">Discontinued</Card.Text>
+return (
+    <div className="col-md-4 mb-4">
+      <div className="card h-100 shadow-sm border-0">
+        <img
+          //img place holder
+        />
+        <div className="card-body d-flex flex-column justify-content-between">
+          <div>
+            <h5 className="card-title fw-semibold">{card.name}</h5>
+            <p className="card-text small text-muted">
+              {card.description.length > 100
+                ? card.description.slice(0, 100) + '...'
+                : card.description}
+            </p>
+
+            {card.categories && card.categories.map((type, i) => {
+              const color = typeColors[type.toLowerCase()] || 'secondary';
+              return (
+                <span key={i} className={`badge bg-${color} me-2`}>
+                  {type}
+                </span>
+              );
+            })}
+
+          </div>
+          <div className="mt-2">
+            <p className="mb-1 fw-bold text-success">
+              ${(card.price / 100).toFixed(2)}
+            </p>
+            {card.discontinued && (
+              <span className="badge bg-danger mb-2">Discontinued</span>
             )}
-            {hasButton && (
-              <Link href={`/cards/${p.id}`} className="btn btn-primary">
-                View Card
-              </Link>
-            )}
-          </Card.Body>
-        </Card>
-      </Col>
-    </>
+            <Link href={`/cards/${card.id}`} className="btn btn-sm btn-outline-primary w-100">
+              View Card
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
