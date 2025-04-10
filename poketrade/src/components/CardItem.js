@@ -4,9 +4,10 @@ import { Container, Row, Col, Card } from "react-bootstrap";
 import { useState } from "react";
 import { useAtom } from "jotai";
 import { loggedInAtom } from "store/loginAtom";
+import typeColors from "utils/typeColors";
 
 export default function CardItem(props) {
-  const p = props.card;
+  const card = props.card;
   const hasButton = props.hasButton;
   const [loggedIn] = useAtom(loggedInAtom);
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
@@ -40,30 +41,28 @@ export default function CardItem(props) {
         break;
     }
   };
-return (
-    <div className="col-md-4 mb-4">
+  return (
+    <div className="col-md-2 mb-4">
       <div className="card h-100 shadow-sm border-0">
-        <img
-          //img place holder
-        />
+        <img src={card.image} alt={card.name} />
         <div className="card-body d-flex flex-column justify-content-between">
           <div>
             <h5 className="card-title fw-semibold">{card.name}</h5>
             <p className="card-text small text-muted">
               {card.description.length > 100
-                ? card.description.slice(0, 100) + '...'
+                ? card.description.slice(0, 100) + "..."
                 : card.description}
             </p>
 
-            {card.categories && card.categories.map((type, i) => {
-              const color = typeColors[type.toLowerCase()] || 'secondary';
-              return (
-                <span key={i} className={`badge bg-${color} me-2`}>
-                  {type}
-                </span>
-              );
-            })}
-
+            {card.categories &&
+              card?.categories?.map((type, i) => {
+                const color = typeColors[type.toLowerCase()] || "secondary";
+                return (
+                  <span key={i} className={`badge bg-${color} me-2`}>
+                    {type}
+                  </span>
+                );
+              })}
           </div>
           <div className="mt-2">
             <p className="mb-1 fw-bold text-success">
@@ -72,7 +71,10 @@ return (
             {card.discontinued && (
               <span className="badge bg-danger mb-2">Discontinued</span>
             )}
-            <Link href={`/cards/${card.id}`} className="btn btn-sm btn-outline-primary w-100">
+            <Link
+              href={`/cards/${card.id}`}
+              className="btn btn-sm btn-outline-primary w-100"
+            >
               View Card
             </Link>
           </div>
