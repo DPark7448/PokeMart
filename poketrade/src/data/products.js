@@ -548,7 +548,7 @@ const products = [
     "price": 1345,
     "discontinued": false,
     "categories": 
-      "grass"
+      ["grass"]
     
   }
 ];
