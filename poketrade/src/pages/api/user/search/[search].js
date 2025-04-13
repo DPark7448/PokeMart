@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import User from "../../../../data/User";
+import jwt from "jsonwebtoken";
 
 export default async function handler(req, res) {
   if (!(req.method === "PUT" || req.method === "DELETE")) {
@@ -26,7 +27,12 @@ export default async function handler(req, res) {
           const searchObj = u.searchHistory.find((c) => c.search === search);
           switch (req.method) {
             case "PUT":
-              if (!searchObj) u.searchHistory.push({ search: search });
+              if (!searchObj) {
+                u.searchHistory.push({ search: search });
+                if (u.searchHistory.length > 5) {
+                  u.searchHistory.splice(0, 1);
+                }
+              }
               break;
             case "DELETE":
               if (searchObj)
@@ -46,7 +52,7 @@ export default async function handler(req, res) {
                 .status(200)
                 .end(
                   `${req.method === "PUT" ? "Added" : "Deleted"} search ` +
-                    card +
+                    search +
                     ` ${req.method === "PUT" ? "to" : "from"} ` +
                     username +
                     `'s Search Histoyr`

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import SearchBar from "./SearchBar";
 import { useAtom } from "jotai";
 
-import SearchBar from "./SearchBar";
 import { loggedInAtom } from "../store/loginAtom";
 
 export default function NavBar() {
@@ -73,7 +73,7 @@ export default function NavBar() {
             <Nav.Link href="/contact">Contact</Nav.Link>
           </Nav>
           <div
-            className="my-3"
+            className="my-3 align-self-center"
             style={{ marginLeft: "10%", marginRight: "20%" }}
           >
             <SearchBar />
