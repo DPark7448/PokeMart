@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
-import { useAtom } from "jotai";
 import Link from "next/link";
+import { Container, Nav, Navbar } from "react-bootstrap";
+import { useAtom } from "jotai";
+
 import SearchBar from "./SearchBar";
 import { loggedInAtom } from "../store/loginAtom";
 
 export default function NavBar() {
   const [loggedIn] = useAtom(loggedInAtom);
+  const [expanded, setExpanded] = useState(true);
   const [favEle, setFavEle] = useState(<></>);
 
   useEffect(() => {
     if (loggedIn) {
       setFavEle(
         <>
-          <div className="d-flex gap-2">
+          <Nav className="d-flex gap-2">
             <Link
               href="/favorites"
               className="btn btn-dark btn-sm rounded-pill px-3 py-1"
@@ -21,17 +24,17 @@ export default function NavBar() {
             </Link>
             <Link
               href="/logout"
-              className="btn btn-dark btn-sm rounded-pill px-3 py-1"
+              className="btn btn-dark btn-sm rounded-pill px-3 py-1 text-nowrap"
             >
               Log Out
             </Link>
-          </div>
+          </Nav>
         </>
       );
     } else {
       setFavEle(
         <>
-          <div className="d-flex gap-2">
+          <Nav className="d-flex gap-2">
             <Link
               href="/login"
               className="btn btn-outline-dark btn-sm rounded-pill px-3 py-1"
@@ -44,39 +47,41 @@ export default function NavBar() {
             >
               Register
             </Link>
-          </div>
+          </Nav>
         </>
       );
     }
   }, [loggedIn]);
 
   return (
-    <nav className="navbar navbar-light bg-light border-bottom py-3">
-      <div className="container-fluid d-flex align-items-center justify-content-between position-relative">
-        <div className="d-flex align-items-center gap-4 fs-5">
-          <Link href="/" className="navbar-brand fw-bold fs-4 mb-0 Text-dark">
-            Poké Mart
-          </Link>
-          <Link href="/cards" className="nav-link px-2">
-            Card List
-          </Link>
-          <Link href="/about" className="nav-link px-2">
-            About
-          </Link>
-          <Link href="/contact" className="nav-link px-2">
-            Contact
-          </Link>
-        </div>
+    <Navbar
+      expand="xl"
+      className="bg-body-tertiary"
+      onToggle={(e) => {
+        setExpanded(e);
+      }}
+    >
+      <Container className="d-flex justify-content-between">
+        <Navbar.Brand href="/" className="fw-bold">
+          Poké Mart
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav bg-body-tertiary">
+          <Nav className="d-flex">
+            <Nav.Link href="/cards">Card List</Nav.Link>
+            <Nav.Link href="/about">About</Nav.Link>
+            <Nav.Link href="/contact">Contact</Nav.Link>
+          </Nav>
+          <div
+            className="my-3"
+            style={{ marginLeft: "10%", marginRight: "20%" }}
+          >
+            <SearchBar />
+          </div>
 
-        <div
-          className="position-absolute top-50 start-50 translate-middle"
-          style={{ minWidth: "300px" }}
-        >
-          <SearchBar />
-        </div>
-
-        {favEle}
-      </div>
-    </nav>
+          {favEle}
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
