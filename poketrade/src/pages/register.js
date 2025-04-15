@@ -1,8 +1,8 @@
- // src/pages/register.js
- import { Card, Form, Button, Alert } from "react-bootstrap"; // Import Alert
- import { useRouter } from "next/router"; //to redirect
- import { useState } from "react"; //to manage state
- import { registerUser } from "../lib/authenticate";
+// src/pages/register.js
+import { Card, Form, Button, Alert } from "react-bootstrap"; // Import Alert
+import { useRouter } from "next/router"; //to redirect
+import { useState } from "react"; //to manage state
+import { registerUser } from "../lib/authenticate";
 
 export default function Register() {
   const router = useRouter();
@@ -21,6 +21,7 @@ export default function Register() {
 
     try {
       const result = await registerUser(userName, password, confirmPass);
+      console.log("why");
       if (result.success) {
         setError(null);
         alert("User successfully created");
@@ -40,7 +41,9 @@ export default function Register() {
       <Card style={{ maxWidth: "400px", width: "100%" }} className="shadow p-4">
         <Card.Body>
           <h3 className="mb-3 text-center">Create Account</h3>
-          <p className="text-muted text-center mb-4">Register to start using the app</p>
+          <p className="text-muted text-center mb-4">
+            Register to start using the app
+          </p>
 
           {error && <Alert variant="danger">{error}</Alert>}
 

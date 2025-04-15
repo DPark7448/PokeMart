@@ -10,24 +10,26 @@ export default async function handler(req, res) {
     req.body = JSON.parse(req.body);
   } catch {}
   //const { router } = useRouter();
-  const { username, password } = req.body;
+  const { username, password, password2 } = req.body;
   const db = process.env.DB_URI;
-  if (!username) return res.end();
+  if (!username) return res.status(400).end("Username not provided");
+  if (password != password2)
+    return res.status(400).end("Passwords do not match");
   await mongoose.connect(db);
   mongoose
     .connect(db)
-    .then(async (res) => {
+    .then(async () => {
       console.log("MongoDB connected");
       console.log("Name: " + username);
       const newUser = new User({ username, password });
       await newUser
         .save()
         .then(() => {
-          //mongoose.connection.close();
+          mongoose.connection.close();
           return res.status(200).end("Created user: " + username);
         })
         .catch((err) => {
-          //mongoose.connection.close();
+          mongoose.connection.close();
           if (err.code == 11000) {
             return res.status(400).end("This user already exists");
           }
@@ -37,7 +39,7 @@ export default async function handler(req, res) {
     })
     .catch((err) => {
       console.log(err);
-      //mongoose.connection.close();
+      mongoose.connection.close();
       return res.status(500).end("An error has occurred");
     });
 }
