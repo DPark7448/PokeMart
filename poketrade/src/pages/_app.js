@@ -4,6 +4,10 @@ import NavBar from "../components/NavBar";
 import { useRouter } from "next/router"; //to redirect
 import { useAtom } from "jotai";
 import { loggedInAtom } from "../store/loginAtom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Layout from '@/components/Layout';
+import RouteGuard from '@/components/RouteGuard';
+
 
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
@@ -21,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <NavBar />
-      <Component {...pageProps} />
+      <RouteGuard><Layout><Component {...pageProps} /></Layout></RouteGuard>
     </>
   );
 }
