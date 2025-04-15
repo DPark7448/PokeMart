@@ -1,21 +1,16 @@
-import React from 'react';
+import React from "react";
+import NavBar from "./NavBar";
 
 const Layout = ({ children }) => {
-    return (
-        <div>
-            <header>
-                <nav>
-                    <h1>PokeTrade</h1>
-                </nav>
-            </header>
-            <main>
-                {children}
-            </main>
-            <footer>
-                <p>&copy; 2025 PokeTrade. All rights reserved.</p>
-            </footer>
-        </div>
-    );
+  return (
+    <div>
+      <NavBar />
+      <main>{children}</main>
+      <footer>
+        <p>&copy; 2025 PokeTrade. All rights reserved.</p>
+      </footer>
+    </div>
+  );
 };
 
 export default Layout;

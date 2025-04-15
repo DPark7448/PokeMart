@@ -23,7 +23,6 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <NavBar />
       <RouteGuard>
         <Layout>
           <Component {...pageProps} />
