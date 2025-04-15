@@ -28,7 +28,7 @@ export default async function handler(req, res) {
           switch (req.method) {
             case "PUT":
               if (!searchObj) {
-                u.searchHistory.push({ search: search });
+                u.searchHistory.push({ search: search, time: new Date() });
                 if (u.searchHistory.length > 5) {
                   u.searchHistory.splice(0, 1);
                 }

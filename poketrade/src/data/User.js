@@ -12,7 +12,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
   },
   favorites: [{ cardId: { type: String } }],
-  searchHistory: [{ search: { type: String } }],
+  searchHistory: [{ search: { type: String }, time: Date }],
 });
 
 UserSchema.pre("save", function (next) {
