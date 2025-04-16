@@ -68,7 +68,7 @@ export default function SearchBar() {
           </>
         );
       });
-  }, [router, loggedIn]);
+  }, []);
 
   return (
     <Form className="d-flex" onSubmit={handleSearch} style={{ width: "400px" }}>
