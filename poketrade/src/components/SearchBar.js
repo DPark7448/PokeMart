@@ -90,6 +90,7 @@ export default function SearchBar() {
           </DropdownButton>
         )}
       </InputGroup>
+
       <Button variant="primary" className="btn ms-2 px-3" type="submit">
         Search
       </Button>
