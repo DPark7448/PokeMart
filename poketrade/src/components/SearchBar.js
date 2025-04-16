@@ -91,14 +91,7 @@ export default function SearchBar() {
         )}
       </InputGroup>
 
-      <Button
-        variant="outline-danger"
-        className="btn ms-2 px-3"
-        type="button"
-        onClick={() => (searchInputRef.current.value = "")}
-      >
-        Clear
-      </Button>
+      
       <Button
         variant="primary"
         className="btn ms-2 px-3"
