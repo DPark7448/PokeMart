@@ -24,14 +24,7 @@ export default function Contact() {
       return;
     }
 
-    try {
-      // Simulate successful submission (you can add an actual API call here)
-      setSubmitted(true);
-      setError(null);
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    }
-  };
+   
 
   return (
     <div className="d-flex justify-content-center align-items-center min-vh-100">
