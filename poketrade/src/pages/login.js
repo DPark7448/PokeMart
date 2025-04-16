@@ -43,7 +43,7 @@ export default function Login() {
       return;
     }
     try {
-      // const res = await fetch("/api/user/login", options);
+      // const res = await fetch("/api/user/login", options)
       const result = await authenticateUser(userName, password);
       if (result.success) {
         localStorage.setItem("token", result.token); //store token in local storage
