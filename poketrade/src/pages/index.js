@@ -18,7 +18,7 @@ export default function Home() {
   const isFavorite = (id) => favorites.includes(id);
 
   const featured = useMemo(() => {
-    return [...products].sort(() => Math.random() - 0.5).slice(0, 4);
+    return [...products].sort(() => Math.random() - 0.5).slice(0, 6);
   }, []);
 
   return (
