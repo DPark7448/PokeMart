@@ -85,6 +85,22 @@ export default function SearchBar() {
             title="History"
             className="fs-6"
             align={"end"}
+            onClick={() => {
+              setHisEle(
+                <>
+                  {history.map((s) => {
+                    return (
+                      <Dropdown.Item
+                        key={s._id}
+                        href={`/search?query=${s.search}`}
+                      >
+                        {decodeURIComponent(s.search)}
+                      </Dropdown.Item>
+                    );
+                  })}
+                </>
+              );
+            }}
           >
             {hisEle}
           </DropdownButton>
