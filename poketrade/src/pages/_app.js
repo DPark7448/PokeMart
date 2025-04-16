@@ -5,8 +5,8 @@ import { useRouter } from "next/router"; //to redirect
 import { useAtom } from "jotai";
 import { loggedInAtom } from "../store/loginAtom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Layout from '@/components/Layout';
-import RouteGuard from '@/components/RouteGuard';
+import Layout from '../components/Layout';
+import RouteGuard from '../components/RouteGuard';
 
 
 function MyApp({ Component, pageProps }) {

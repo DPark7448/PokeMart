@@ -21,16 +21,23 @@ export default function SearchBar() {
   const handleSearch = (e) => {
     e.preventDefault();
     const value = searchInputRef.current.value.trim();
-    if (value) {
+    if (!value) return;
+    
       const search = encodeURIComponent(value);
       const token = localStorage.getItem("token");
-      if (token) {
+
+      if (!token || !loggedIn) {
+        router.push("/login");
+        return;
+      }
+      if (loggedIn) {
         fetch(`/api/user/search/${search}`, {
           method: "PUT",
           headers: { authorization: token },
         }).finally(() => router.push(`/search?query=${search}`));
+      } else{
+    router.push(`/search?query=${search}`);
       }
-    } else router.push(`/search?query=${search}`);
   };
 
   useEffect(() => {
@@ -92,6 +99,14 @@ export default function SearchBar() {
       >
         Clear
       </Button>
+      <Button
+        variant="primary"
+        className="btn ms-2 px-3"
+        tupe="submit"
+      >
+        Search
+      </Button>
+
     </Form>
   );
 }
