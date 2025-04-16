@@ -46,7 +46,7 @@ export default function Sidebar({ onFilterChange }) {
         type="range"
         className="form-range"
         min={0}
-        max={2500}
+        max={5000}
         step={50}
         value={maxPrice}
         onChange={(e) => setMaxPrice(parseInt(e.target.value))}
