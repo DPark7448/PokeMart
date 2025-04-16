@@ -8,39 +8,26 @@ import typeColors from "utils/typeColors";
 
 export default function CardItem(props) {
   const card = props.card;
-  const hasButton = props.hasButton;
+  const hasButton = props.hasButton; 
   const [loggedIn] = useAtom(loggedInAtom);
   const [isFavorite, setIsFavorite] = useState(props.isFavorite);
 
   const handleToggle = () => {
     const token = localStorage.getItem("token");
-    switch (isFavorite) {
-      case true:
-        fetch("/api/user/favorite/" + p.id, {
-          method: "DELETE",
-          headers: { authorization: token },
-        })
-          .then(async (res) => {
-            if (res.status === 200) {
-              setIsFavorite(false);
-            }
-          })
-          .catch((err) => console.log(err));
-        break;
-      default:
-        fetch("/api/user/favorite/" + p.id, {
-          method: "PUT",
-          headers: { authorization: token },
-        })
-          .then(async (res) => {
-            if (res.status === 200) {
-              setIsFavorite(true);
-            }
-          })
-          .catch((err) => console.log(err));
-        break;
-    }
+    const method = isFavorite ? "DELETE" : "PUT";
+
+    fetch("/api/user/favorite/" + card.id, {
+      method,
+      headers: { authorization: token },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          setIsFavorite(!isFavorite);
+        }
+      })
+      .catch((err) => console.log("Favorite toggle error:", err));
   };
+
   return (
     <div className="col-md-2 mb-4">
       <div className="card h-100 shadow-sm border-0">
@@ -55,7 +42,7 @@ export default function CardItem(props) {
             </p>
 
             {card.categories &&
-              card?.categories?.map((type, i) => {
+              card.categories.map((type, i) => {
                 const color = typeColors[type.toLowerCase()] || "secondary";
                 return (
                   <span key={i} className={`badge bg-${color} me-2`}>
@@ -77,29 +64,20 @@ export default function CardItem(props) {
             >
               View Card
             </Link>
+
+            {loggedIn && hasButton && (
+              <button
+                className={`btn btn-sm mt-2 w-100 ${
+                  isFavorite ? "btn-danger" : "btn-outline-danger"
+                }`}
+                onClick={handleToggle}
+              >
+                {isFavorite ? "♥" : "♡"}
+              </button>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// {
-//   hasButton && (
-//     <Col>
-//       <Link href={`/cards/${p.id}`} className="btn btn-primary">
-//         View Card
-//       </Link>
-//       {loggedIn && (
-//         <button
-//           className={`btn btn-sm ${
-//             isFavorite ? "btn-danger" : "btn-outline-danger"
-//           } ms-2 pb-2`}
-//           onClick={handleToggle}
-//         >
-//           {isFavorite ? "♥" : "♡"}
-//         </button>
-//       )}
-//     </Col>
-//   );
-// }
