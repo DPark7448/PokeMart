@@ -3,23 +3,22 @@ import Link from "next/link";
 import products from "../data/products";
 import { useAtom } from "jotai";
 import { favoritesAtom } from "store/favoritesAtom";
-import { useEffect, useState } from "react";
-import CardList from "components/CardList";
+import { useMemo } from "react";
+import ClientCardList from "../components/ClientCardList";
 
 export default function Home() {
-  const [featuredEle, setFeaturedEle] = useState(<></>);
-  //   const [favorites, setFavorites] = useAtom(favoritesAtom);
-  //   const toggleFavorite = (id) => {
-  //     setFavorites((prev) =>
-  //       prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
-  //     );
-  //   };
+  const [favorites, setFavorites] = useAtom(favoritesAtom);
 
-  //   const isFavorite = (id) => favorites.includes(id);
+  const toggleFavorite = (id) => {
+    setFavorites((prev) =>
+      prev.includes(id) ? prev.filter((fav) => fav !== id) : [...prev, id]
+    );
+  };
 
-  useEffect(() => {
-    const shuffled = [...products].sort(() => Math.random() - 0.5).slice(0, 6);
-    setFeaturedEle(<CardList cards={shuffled} useLocal={true} />);
+  const isFavorite = (id) => favorites.includes(id);
+
+  const featured = useMemo(() => {
+    return [...products].sort(() => Math.random() - 0.5).slice(0, 4);
   }, []);
 
   return (
@@ -29,14 +28,9 @@ export default function Home() {
         <meta name="description" content="Pokémon cards collection" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
-          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
-          crossOrigin="anonymous"
-        />
       </Head>
 
+      {/* Hero Section */}
       <div
         className="d-flex flex-column justify-content-center align-items-center text-center"
         style={{
@@ -48,15 +42,15 @@ export default function Home() {
       >
         <h1 className="display-4 fw-bold text-black">Poké Mart</h1>
         <p className="lead mb-4 text-black">Your #1 Hub For Pokémon Cards</p>
-        <Link href="/products" className="btn btn-outline-dark">
+        <Link href="/cards" className="btn btn-outline-dark">
           View The Entire Catalogue
         </Link>
       </div>
-      {/*featured cards section*/}
 
+      {/* Featured Cards */}
       <div className="container mt-4">
         <h2 className="mb-4">Featured Pokémon Cards</h2>
-        <div className="row">{featuredEle}</div>
+        <ClientCardList cards={featured} hasButton={true} />
       </div>
     </>
   );
