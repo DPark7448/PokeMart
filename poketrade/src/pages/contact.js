@@ -24,6 +24,14 @@ export default function Contact() {
       return;
     }
 
+     try {
+      setSubmitted(true);
+      setError(null);
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    }
+  };
+
    
 
   return (
