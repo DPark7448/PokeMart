@@ -22,22 +22,22 @@ export default function SearchBar() {
     e.preventDefault();
     const value = searchInputRef.current.value.trim();
     if (!value) return;
-    
-      const search = encodeURIComponent(value);
-      const token = localStorage.getItem("token");
 
-      if (!token || !loggedIn) {
-        router.push("/login");
-        return;
-      }
-      if (loggedIn) {
-        fetch(`/api/user/search/${search}`, {
-          method: "PUT",
-          headers: { authorization: token },
-        }).finally(() => router.push(`/search?query=${search}`));
-      } else{
-    router.push(`/search?query=${search}`);
-      }
+    const search = encodeURIComponent(value);
+    const token = localStorage.getItem("token");
+
+    if (!token || !loggedIn) {
+      router.push("/login");
+      return;
+    }
+    if (loggedIn) {
+      fetch(`/api/user/search/${search}`, {
+        method: "PUT",
+        headers: { authorization: token },
+      }).finally(() => router.push(`/search?query=${search}`));
+    } else {
+      router.push(`/search?query=${search}`);
+    }
   };
 
   useEffect(() => {
@@ -90,23 +90,9 @@ export default function SearchBar() {
           </DropdownButton>
         )}
       </InputGroup>
-
-      <Button
-        variant="outline-danger"
-        className="btn ms-2 px-3"
-        type="button"
-        onClick={() => (searchInputRef.current.value = "")}
-      >
-        Clear
-      </Button>
-      <Button
-        variant="primary"
-        className="btn ms-2 px-3"
-        type="submit"
-      >
+      <Button variant="primary" className="btn ms-2 px-3" type="submit">
         Search
       </Button>
-
     </Form>
   );
 }
