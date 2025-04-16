@@ -4,7 +4,7 @@ import NavBar from "../components/NavBar";
 import { useRouter } from "next/router"; //to redirect
 import { useAtom } from "jotai";
 import { loggedInAtom } from "../store/loginAtom";
-import { favoritesAtom } from "../store/favoriteAtom";
+import { favoritesAtom } from "../store/favoritesAtom";
 import { searchHistoryAtom } from "../store/searchHistoryAtom";
 import Layout from "../components/Layout";
 import RouteGuard from "../components/RouteGuard";
