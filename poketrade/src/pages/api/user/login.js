@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   } catch {}
 
   const { username, password } = req.body;
-  const db = process.env.DB_URI;
+  const db = process.env.MONGODB_URI;
 
   //console.log(req.body);
   await mongoose.connect(db);

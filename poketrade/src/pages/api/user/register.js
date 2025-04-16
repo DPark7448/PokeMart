@@ -11,7 +11,7 @@ export default async function handler(req, res) {
   } catch {}
   //const { router } = useRouter();
   const { username, password, password2 } = req.body;
-  const db = process.env.DB_URI;
+  const db = process.env.MONGODB_URI;
   if (!username) return res.status(400).end("Username not provided");
   if (password != password2)
     return res.status(400).end("Passwords do not match");

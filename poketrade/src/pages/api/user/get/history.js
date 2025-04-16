@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
   const user = jwt.verify(token, process.env.NEXT_PUBLIC_SECRET).username;
 
-  const db = process.env.DB_URI;
+  const db = process.env.MONGODB_URI;
   await mongoose.connect(db);
   mongoose
     .connect(db)
