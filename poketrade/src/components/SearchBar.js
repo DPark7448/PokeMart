@@ -102,7 +102,7 @@ export default function SearchBar() {
       <Button
         variant="primary"
         className="btn ms-2 px-3"
-        tupe="submit"
+        type="submit"
       >
         Search
       </Button>
